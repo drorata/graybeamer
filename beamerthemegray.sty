@@ -178,7 +178,7 @@
   \vskip5pt\color{fu-blue}
   \rule{\textwidth}{0.4pt}\\ % horizontal line
   \vskip2pt
-  \makebox[123mm]{\hspace{7.5mm}
+  \makebox[\textwidth]{\hspace{5pt}
     \color{fu-blue}
     % foot line text
     \insertshorttitle
@@ -192,7 +192,8 @@
     \ifpagenumbers@disabled\fi%
     \ifpagenumbers@enabled\insertframenumber\fi%
     \ifpagenumbers@enabledwithtotalnumber%
-    \insertframenumber\,/\,\inserttotalframenumber\fi
+    \insertframenumber\,/\,\inserttotalframenumber\fi%
+    \hspace{5pt}
   }
   \vskip4pt
 }
