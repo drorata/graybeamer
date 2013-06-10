@@ -1,4 +1,3 @@
-%%% Test...
 \ProvidesClass{graybeamer}[2011/06/10 v 0.01 Beamer document class for FU Berlin]
 %
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{beamer}}
