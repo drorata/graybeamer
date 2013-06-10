@@ -1,0 +1,212 @@
+\ProvidesClass{graybeamer}[2011/06/10 v 0.01 Beamer document class for FU Berlin]
+%
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{beamer}}
+
+\DeclareOption{9pt}{%
+  \PassOptionsToClass{\CurrentOption}{beamer}
+}
+\DeclareOption{10pt}{%
+  \PassOptionsToClass{\CurrentOption}{beamer}
+}
+\DeclareOption{11pt}{%
+  \PassOptionsToClass{\CurrentOption}{beamer}
+}
+
+\newif\ifpagenumbers@disabled
+\newif\ifpagenumbers@enabled
+\newif\ifpagenumbers@enabledwithtotalnumber
+%
+\DeclareOption{nopagenumbers}{%
+  \pagenumbers@disabledtrue%
+  \pagenumbers@enabledfalse%
+  \pagenumbers@enabledwithtotalnumberfalse%
+}
+\DeclareOption{withpagenumbers}{%
+  \pagenumbers@disabledfalse%
+  \pagenumbers@enabledtrue%
+  \pagenumbers@enabledwithtotalnumberfalse%
+}
+\DeclareOption{withpagenumbersandtotalnumber}{%
+  \pagenumbers@disabledfalse%
+  \pagenumbers@enabledfalse%
+  \pagenumbers@enabledwithtotalnumbertrue%
+}
+
+%% Fallback
+\DeclareOption*{
+  \ClassWarning{myclass}{Unknown option '\CurrentOption'}
+}
+
+\ProcessOptions*\relax
+%
+
+\LoadClass{beamer}
+
+\RequirePackage[utf8x]{inputenc} % to make utf-8 input possible
+\RequirePackage[english]{babel}
+\RequirePackage{amssymb}
+\RequirePackage{amsmath,dsfont,listings}
+
+\RequirePackage{arev,t1enc} % looks nicer than the standard sans-serif font
+% if you experience problems, comment out the line
+% above and change the documentclass option "9pt"
+% to "10pt"
+
+\makeatletter
+
+\setbeamertemplate{navigation symbols}{}
+
+% NOTE: 1cm = 0.393 in = 28.346 pt;    1 pt = 1/72 in = 0.0352 cm
+\setbeamersize{text margin right=3.5mm, text margin left=3.5mm}  % text margin
+
+% colors to be used
+\definecolor{text-grey}{rgb}{0.45, 0.45, 0.45} % grey text on white background
+\definecolor{bg-grey}{rgb}{0.66, 0.65, 0.60} % grey background (for white text)
+\definecolor{fu-blue}{RGB}{0, 51, 102} % blue text
+\definecolor{fu-green}{RGB}{153, 204, 0} % green text
+\definecolor{fu-red}{RGB}{204, 0, 0} % red text (used by \alert)
+
+\usecolortheme{lily}
+\setbeamercolor*{normal text}{fg=black,bg=white}
+\setbeamercolor*{alerted text}{fg=fu-red}
+\setbeamercolor*{example text}{fg=fu-green}
+\setbeamercolor*{structure}{fg=fu-blue}
+
+\setbeamercolor*{block title}{fg=white,bg=black!50}
+\setbeamercolor*{block title alerted}{fg=white,bg=red!70}
+\setbeamercolor*{block title example}{fg=white,bg=green!60}
+
+\setbeamercolor*{block body}{bg=black!20}
+\setbeamercolor*{block body alerted}{bg=black!20}
+\setbeamercolor*{block body example}{bg=black!20}
+
+\setbeamercolor{bibliography entry author}{fg=fu-blue}
+\setbeamercolor{bibliography entry journal}{fg=text-grey}
+
+\setbeamercolor{item}{fg=fu-blue}
+%%% end colors
+
+
+\newcommand*{\logosmall}[2][23pt]{%
+  \pgfdeclareimage[height=#1]{university-logo}{#2}
+  \def\logosmall@defined{}
+  \def\logosmall@height{#1}
+}
+\logo{\pgfuseimage{university-logo}}
+
+\newcommand*{\logobig}[2][1.085cm]{%
+  \pgfdeclareimage[height={#1}]{big-university-logo}{#2}
+  \def\logobig@defined{}
+}
+
+\newcommand*{\logoaux}[2][1.085cm]{%
+  \pgfdeclareimage[height={#1}]{logoaux}{#2}
+  \def\logoaux@defined{}
+}
+
+\newcommand*{\logoauxx}[2][1.085cm]{%
+  \pgfdeclareimage[height={#1}]{logoauxx}{#2}
+  \def\logoauxx@defined{}
+}
+
+\newcommand*{\titleimage}[2][2.92cm]{%
+  \pgfdeclareimage[height=#1]{title-image}{#2}
+  \titlegraphic{\pgfuseimage{title-image}}
+  \def\titleimage@defined{}
+}
+
+% switch off the sidebars
+\setbeamersize{sidebar width left=0cm, sidebar width right=0mm}
+\setbeamertemplate{sidebar right}{}
+\setbeamertemplate{sidebar left}{}
+
+%%% title page
+\setbeamertemplate{title page}{
+  % upper right: Logos
+  \vskip0pt
+  \hfill
+  \@ifundefined{logoauxx@defined}{}{%
+    \pgfuseimage{logoauxx}\hfill}%
+  \@ifundefined{logoaux@defined}{}{%
+    \pgfuseimage{logoaux}\hfill}%
+  \pgfuseimage{big-university-logo}\\
+  \vskip1ex\hskip3pt
+
+  % title frame's body
+  \begin{columns}
+    % Title's figure
+    \begin{column}{0.3\linewidth}
+      \hspace{-1mm}%
+      \@ifundefined{titleimage@defined}{}%
+      {\inserttitlegraphic}
+    \end{column}
+    % Title's text
+    \begin{column}{0.65\linewidth}
+      \vskip10pt
+      \parbox[top][1.35cm][c]{\linewidth}{
+        \begin{large}
+          \color{text-grey}\inserttitle
+        \end{large}
+        \ifx\insertsubtitle\empty\else
+        \\ \small \insertsubtitle
+        \fi
+      }
+      \vskip4ex
+      \parbox[top][1.35cm][c]{11cm}{
+        \small \insertauthor
+        \vskip1ex
+        \insertinstitute
+        \vskip2ex
+        \insertdate
+      }%
+    \end{column}
+  \end{columns}
+}
+
+
+% frame title
+% is truncated before logo and splits on two lines
+% if neccessary (or manually using \\)
+\setbeamertemplate{frametitle}{%
+  \leavevmode
+  \vskip-\logosmall@height\vskip-\logosmall@height%
+  \color{text-grey}\large%
+  \begin{minipage}[b][\logosmall@height]{\textwidth}%
+    \flushleft\insertframetitle%
+  \end{minipage}%
+}
+
+%%% headline
+\setbeamertemplate{headline}{
+  \leavevmode
+  \vskip2pt\hfill\insertlogo\hspace{2pt} % logo on the right
+  \vskip2pt\color{fu-blue}\rule{\textwidth}{0.4pt} % horizontal line
+}
+
+%%% footline
+\setbeamertemplate{footline}{
+  \vskip5pt\color{fu-blue}
+  \rule{\textwidth}{0.4pt}\\ % horizontal line
+  \vskip2pt
+  \makebox[123mm]{\hspace{7.5mm}
+    \color{fu-blue}
+    % foot line text
+    \insertshorttitle
+    \ifx\insertsection\empty\else
+    : \insertsection
+    \fi
+    \ifx\insertsubsection\empty\else
+    : \insertsubsection
+    \fi
+    \hfill \insertshortdate\hskip2em%
+    \ifpagenumbers@disabled\fi%
+    \ifpagenumbers@enabled\insertframenumber\fi%
+    \ifpagenumbers@enabledwithtotalnumber%
+    \insertframenumber\,/\,\inserttotalframenumber\fi
+  }
+  \vskip4pt
+}
+
+\makeatother
+
+\endinput
