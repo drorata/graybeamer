@@ -37,6 +37,7 @@
 \RequirePackage{tikz,pgfplots}
 \usetikzlibrary{calc,positioning}
 \RequirePackage{subfigure}
+% \RequirePackage{wasysym}
 \RequirePackage{arev,t1enc} % looks nicer than the standard sans-serif font
 % if you experience problems, comment out the line
 % above and change the documentclass option "9pt"
@@ -175,26 +176,29 @@
 
 %%% footline
 \setbeamertemplate{footline}{
-  \vskip5pt\color{fu-blue}
-  \rule{\textwidth}{0.4pt}\\ % horizontal line
+  \vskip5pt
+  \leavevmode
+  \color{fu-blue}
+  \rule{\textwidth}{0.4pt}\\% horizontal line
   \vskip2pt
-  \makebox[\textwidth]{\hspace{5pt}
+  \begin{overlayarea}{1.0\textwidth}{2ex}
+    \hspace{5pt}
     \color{fu-blue}
     % foot line text
     \insertshorttitle
     \ifx\insertsection\empty\else
-    : \insertsection
+    ~\(\arrowbullet\)~\insertsection
     \fi
     \ifx\insertsubsection\empty\else
-    : \insertsubsection
+    ~\(\arrowbullet\)~\insertsubsection
     \fi
-    \hfill \insertshortdate\hskip2em%
+    \hfill \insertshortdate%
     \ifpagenumbers@disabled\fi%
-    \ifpagenumbers@enabled\insertframenumber\fi%
+    \ifpagenumbers@enabled\hskip2eminsertframenumber\fi%
     \ifpagenumbers@enabledwithtotalnumber%
-    \insertframenumber\,/\,\inserttotalframenumber\fi%
+    \hskip2em\insertframenumber\,/\,\inserttotalframenumber\fi%
     \hspace{5pt}
-  }
+  \end{overlayarea}
   \vskip4pt
 }
 
