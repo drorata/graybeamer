@@ -176,30 +176,35 @@
 
 %%% footline
 \setbeamertemplate{footline}{
-  \vskip5pt
+  \vskip6pt
   \leavevmode
   \color{fu-blue}
   \rule{\paperwidth}{0.4pt}\\% horizontal line
   \vskip2pt
-  \begin{overlayarea}{1.0\paperwidth}{2ex}
-    \hspace{4pt}
-    \color{fu-blue}
-    % foot line text
-    \insertshorttitle
-    \ifx\insertsection\empty\else
-    ~\(\arrowbullet\)~\insertsection
-    \fi
-    \ifx\insertsubsection\empty\else
-    ~\(\arrowbullet\)~\insertsubsection
-    \fi
-    \hfill\insertshortdate%
-    \ifpagenumbers@disabled\fi%
-    \ifpagenumbers@enabled\hspace*{2em}\insertframenumber\fi%
-    \ifpagenumbers@enabledwithtotalnumber%
-    \hspace*{2em}\insertframenumber\,/\,\inserttotalframenumber\fi%
-    \hspace{5pt}
-  \end{overlayarea}
-  \vskip4pt
+  \hbox{%
+    \begin{beamercolorbox}[%
+      wd=0.78\paperwidth,ht=2ex,dp=1ex,left,leftskip=2pt]{fu-blue}
+      % foot line text
+      \insertshorttitle
+      \ifx\insertsection\empty\else
+      ~\(\arrowbullet\)~\insertsection
+      \fi
+      \ifx\insertsubsection\empty\else
+      ~\(\arrowbullet\)~\insertsubsection
+      \fi
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[%
+      wd=0.12\paperwidth,ht=2ex,dp=1ex,center]{fu-blue}
+      \insertshortdate%
+    \end{beamercolorbox} \begin{beamercolorbox}[%
+      wd=0.1\paperwidth,ht=2ex,dp=1ex,right,rightskip=5pt]{fu-blue}
+      \ifpagenumbers@disabled\fi%
+      \ifpagenumbers@enabled\insertframenumber\fi%
+      \ifpagenumbers@enabledwithtotalnumber%
+      \insertframenumber\,/\,\inserttotalframenumber\fi%
+    \end{beamercolorbox}
+  }
+  \vskip2pt
 }
 
 \makeatother
