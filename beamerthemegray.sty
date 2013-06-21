@@ -109,8 +109,8 @@
   \pgfdeclareimage[height=#1]{university-logo}{#2}
   \def\logosmall@defined{}
   \def\logosmall@height{#1}
+  \logo{\pgfuseimage{university-logo}}
 }
-\logo{\pgfuseimage{university-logo}}
 
 %
 % Define big logo to appear on the title page
@@ -189,6 +189,8 @@
 % is truncated before logo and splits on two lines
 % if neccessary (or manually using \\)
 \setbeamertemplate{frametitle}{%
+  \@ifundefined{logosmall@defined}{\def\logosmall@height{23pt}}{}
+  % \show\logosmall@height
   \leavevmode
   \vskip-\logosmall@height\vskip-\logosmall@height%
   \color{text-grey}\large%
@@ -199,9 +201,15 @@
 
 %%% headline
 \setbeamertemplate{headline}{
-  \leavevmode
-  \vskip2pt\hfill\insertlogo\hspace{2pt} % logo on the right
-  \vskip2pt\color{fu-blue}\rule{\textwidth}{0.4pt} % horizontal line
+  \@ifundefined{logosmall@defined}{%
+    \leavevmode
+    \vskip2pt\hfill\vspace{23pt}\hspace{2pt} % logo on the right
+    \vskip2pt\color{fu-blue}\rule{\textwidth}{0.4pt} % horizontal line
+  }{%
+    \leavevmode
+    \vskip2pt\hfill\insertlogo\hspace{2pt} % logo on the right
+    \vskip2pt\color{fu-blue}\rule{\textwidth}{0.4pt} % horizontal line
+  }
 }
 
 %%% footline
