@@ -1,0 +1,27 @@
+#+TITLE: Gray Theme for Beamer Document Class
+
+* General
+
+This theme's color is generally gray and clean. It supports three
+page numbering options
+- *nopagenumbers:* No page numbers
+- *pagenumbers:* With page numbers
+- *pagenumbersfull:* With x/y page numbers, i.e. page x out of y.
+
+Furthermore, it supports insertion of an image to the title frame as
+well as logos. In addition, it supports the insertion of a logo to
+the heading of each slide.
+
+** Heading's logo insertion
+Use the macro =\logosmall[<n>pt]{path/to/logo}= where =n=23pt= by
+default and indicates the vertical height of the logo.
+
+** Insertion of title image
+Use the macro =\titleimage[<n>cm]{path/to/title/image}=. Again, =n=
+is the height of the image and it default value is =2.92cm=.
+
+** Insertion of logos to the title
+You can insert up to 3 logos using =\logobig[<n>cm]{path/to/logo1}=
+=\logoaux[<n>cm]{path/to/logo2}= and
+=\logoauxx[<n>cm]{path/to/logo3}=. =n= is an optional argument
+indicating the height of the logos. The default value of =n= is =1.085cm=.
